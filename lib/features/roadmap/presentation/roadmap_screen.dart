@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
+// ignore: deprecated_member_use
+import 'package:flutter/material.dart';
 
 import '../../../app/router/responsive_shell.dart';
 import '../../../app/theme/app_tokens.dart';
@@ -161,7 +162,8 @@ class _RoadmapScreenState extends ConsumerState<RoadmapScreen> {
                           controller: _searchController,
                           onChanged: (_) => setState(() {}),
                           decoration: InputDecoration(
-                            hintText: 'Filter modules or checkpoints by keyword (e.g. FastAPI, localhost, RAG)…',
+                            hintText:
+                                'Filter modules or checkpoints by keyword (e.g. FastAPI, localhost, RAG)…',
                             prefixIcon: const Icon(Icons.search_rounded),
                             suffixIcon: query.isEmpty
                                 ? null

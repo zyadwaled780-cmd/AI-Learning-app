@@ -16,7 +16,7 @@ abstract interface class ProgressRepository {
 }
 
 class LocalProgressRepository implements ProgressRepository {
-  LocalProgressRepository({required this._store});
+  LocalProgressRepository({required KeyValueStore store}) : _store = store;
 
   static const String storageKey = 'ai_automation_hero_learner_state_v1';
 

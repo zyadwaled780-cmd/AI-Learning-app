@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
+// ignore: deprecated_member_use
+import 'package:flutter/material.dart';
 
 import '../../../app/router/responsive_shell.dart';
 import '../../../app/theme/app_tokens.dart';
@@ -266,7 +267,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
                 correctCount: correctCount,
                 totalCount: cp.quizQuestions.length,
                 passed: passedNow,
-                disclaimer: 'Remember: passing this knowledge check does not automatically mark the checkpoint Completed—finish the practice task first.',
+                disclaimer:
+                    'Remember: passing this knowledge check does not automatically mark the checkpoint Completed—finish the practice task first.',
               ),
               const SizedBox(height: 18),
             ],
@@ -479,8 +481,9 @@ class _QuizScoreCard extends StatelessWidget {
                 passed
                     ? 'Score: $correctCount / $totalCount ($pct%) — Check Passed'
                     : 'Score: $correctCount / $totalCount ($pct%) — Review explanations below',
-                style: Theme.of(context).textTheme.titleMedium
-                    ?.copyWith(color: accent),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: accent),
               ),
             ],
           ),

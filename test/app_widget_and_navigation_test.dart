@@ -6,7 +6,8 @@ import 'package:ai_automation_hero/core/repositories/curriculum_repository.dart'
 import 'package:ai_automation_hero/core/repositories/key_value_store.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:material_ui/material_ui.dart';
+// ignore: deprecated_member_use
+import 'package:flutter/material.dart';
 
 class _CachedCurriculumRepository implements CurriculumRepository {
   _CachedCurriculumRepository(this.bundle);

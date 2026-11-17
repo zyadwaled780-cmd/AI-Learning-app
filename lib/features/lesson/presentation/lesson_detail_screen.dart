@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
+// ignore: deprecated_member_use
+import 'package:flutter/material.dart';
 
 import '../../../app/router/responsive_shell.dart';
 import '../../../app/theme/app_tokens.dart';
@@ -365,7 +366,8 @@ class _LessonDetailScreenState extends ConsumerState<LessonDetailScreen> {
                   // Worked Examples (Horizontally scrolling code blocks)
                   SectionHeader(
                     title: 'Worked Examples',
-                    subtitle: 'Code blocks scroll horizontally cleanly on small screens.',
+                    subtitle:
+                        'Code blocks scroll horizontally cleanly on small screens.',
                   ),
                   const SizedBox(height: 10),
                   for (final ex in cp.examples) ...[
@@ -545,7 +547,8 @@ class _LessonDetailScreenState extends ConsumerState<LessonDetailScreen> {
                             }
                           },
                           decoration: const InputDecoration(
-                            hintText: 'Write what clicked, errors you debugged, or questions to revisit…',
+                            hintText:
+                                'Write what clicked, errors you debugged, or questions to revisit…',
                           ),
                         ),
                         const SizedBox(height: 10),

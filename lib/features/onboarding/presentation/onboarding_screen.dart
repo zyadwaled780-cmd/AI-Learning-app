@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
+// ignore: deprecated_member_use
+import 'package:flutter/material.dart';
 
 import '../../../app/router/responsive_shell.dart';
 import '../../../app/theme/app_tokens.dart';
@@ -213,7 +214,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       final wide = constraints.maxWidth >= 600;
                       final zeroCard = _EntryPathCard(
                         title: 'Start from zero',
-                        subtitle: 'Begin at Module 1 (Engineering Foundations) through Terminal, Git, Networking, Python, and Production AI.',
+                        subtitle:
+                            'Begin at Module 1 (Engineering Foundations) through Terminal, Git, Networking, Python, and Production AI.',
                         badge: 'Recommended for beginners',
                         icon: Icons.rocket_launch_outlined,
                         selected: _entryPath == EntryPath.zero,
@@ -222,7 +224,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       );
                       final n8nCard = _EntryPathCard(
                         title: 'I already use n8n',
-                        subtitle: 'Take a 10-question diagnostic on HTTP, localhost, Python, Pydantic, RAG & Cloudflare to target weak areas.',
+                        subtitle:
+                            'Take a 10-question diagnostic on HTTP, localhost, Python, Pydantic, RAG & Cloudflare to target weak areas.',
                         badge: 'Suggested path without fake mastery',
                         icon: Icons.account_tree_outlined,
                         selected: _entryPath == EntryPath.n8nUser,
@@ -300,7 +303,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             controller: _customExperienceController,
                             decoration: const InputDecoration(
                               labelText: 'Or describe your background briefly',
-                              hintText: 'e.g. Built n8n Slack bots, confused by Docker localhost & Python APIs',
+                              hintText:
+                                  'e.g. Built n8n Slack bots, confused by Docker localhost & Python APIs',
                             ),
                             onChanged: (val) {
                               if (val.trim().isNotEmpty &&

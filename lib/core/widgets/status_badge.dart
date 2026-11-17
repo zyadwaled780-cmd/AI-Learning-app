@@ -1,4 +1,5 @@
-import 'package:material_ui/material_ui.dart';
+// ignore: deprecated_member_use
+import 'package:flutter/material.dart';
 
 import '../../app/theme/app_tokens.dart';
 import '../models/curriculum_models.dart';

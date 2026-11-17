@@ -124,98 +124,104 @@ void main() {
   });
 
   group('LearnerStateNotifier domain rules', () {
-    test('diagnostic onboarding suggests start module WITHOUT marking skipped modules mastered', () async {
-      final store = InMemoryKeyValueStore();
-      final container = ProviderContainer(
-        overrides: [
-          keyValueStoreProvider.overrideWithValue(store),
-          curriculumRepositoryProvider.overrideWithValue(
-            _MemoryCurriculumRepo(bundle),
-          ),
-        ],
-      );
-      addTearDown(container.dispose);
+    test(
+      'diagnostic onboarding suggests start module WITHOUT marking skipped modules mastered',
+      () async {
+        final store = InMemoryKeyValueStore();
+        final container = ProviderContainer(
+          overrides: [
+            keyValueStoreProvider.overrideWithValue(store),
+            curriculumRepositoryProvider.overrideWithValue(
+              _MemoryCurriculumRepo(bundle),
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
 
-      await container.read(learnerStateProvider.future);
-      final notifier = container.read(learnerStateProvider.notifier);
+        await container.read(learnerStateProvider.future);
+        final notifier = container.read(learnerStateProvider.notifier);
 
-      await notifier.completeOnboarding(
-        entryPath: EntryPath.n8nUser,
-        experienceSummary: 'Uses n8n',
-        weeklyStudyHours: 6,
-        studyDays: const [1, 3, 5],
-        learningGoals: const ['Learn Python & RAG'],
-        suggestedStartModuleId: 'm05',
-        diagnosticResult: DiagnosticResult(
-          completedAt: DateTime.utc(2026, 11, 17),
-          correctCount: 5,
-          totalCount: 10,
-          weakModuleIds: const ['m05', 'm07'],
-          confidentModuleIds: const ['m03', 'm04'],
+        await notifier.completeOnboarding(
+          entryPath: EntryPath.n8nUser,
+          experienceSummary: 'Uses n8n',
+          weeklyStudyHours: 6,
+          studyDays: const [1, 3, 5],
+          learningGoals: const ['Learn Python & RAG'],
           suggestedStartModuleId: 'm05',
-        ),
-      );
-
-      final state = container.read(learnerStateProvider).requireValue;
-      expect(state.profile.onboardingCompleted, isTrue);
-      expect(state.profile.suggestedStartModuleId, 'm05');
-
-      final summary = ProgressSummary.compute(bundle: bundle, state: state);
-      expect(summary.completedCount, 0);
-      for (final modId in ['m01', 'm02', 'm03', 'm04']) {
-        expect(summary.moduleMetrics[modId]?.completedCount, 0);
-      }
-    });
-
-    test('passing quiz does NOT auto-complete checkpoint until learner confirms completion', () async {
-      final store = InMemoryKeyValueStore();
-      final container = ProviderContainer(
-        overrides: [
-          keyValueStoreProvider.overrideWithValue(store),
-          curriculumRepositoryProvider.overrideWithValue(
-            _MemoryCurriculumRepo(bundle),
+          diagnosticResult: DiagnosticResult(
+            completedAt: DateTime.utc(2026, 11, 17),
+            correctCount: 5,
+            totalCount: 10,
+            weakModuleIds: const ['m05', 'm07'],
+            confidentModuleIds: const ['m03', 'm04'],
+            suggestedStartModuleId: 'm05',
           ),
-        ],
-      );
-      addTearDown(container.dispose);
+        );
 
-      await container.read(learnerStateProvider.future);
-      final notifier = container.read(learnerStateProvider.notifier);
+        final state = container.read(learnerStateProvider).requireValue;
+        expect(state.profile.onboardingCompleted, isTrue);
+        expect(state.profile.suggestedStartModuleId, 'm05');
 
-      await notifier.recordQuizAttempt(
-        QuizAttemptRecord(
-          id: 'att_1',
-          targetId: 'm03_c05',
-          attemptedAt: DateTime.utc(2026, 11, 17),
-          correctCount: 2,
-          totalCount: 2,
-          selectedOptionByQuestion: const {'q1': 'a', 'q2': 'b'},
-        ),
-        checkpointTitle: 'Why localhost differs across machines',
-      );
+        final summary = ProgressSummary.compute(bundle: bundle, state: state);
+        expect(summary.completedCount, 0);
+        for (final modId in ['m01', 'm02', 'm03', 'm04']) {
+          expect(summary.moduleMetrics[modId]?.completedCount, 0);
+        }
+      },
+    );
 
-      var progress = container
-          .read(learnerStateProvider)
-          .requireValue
-          .checkpointProgress['m03_c05'];
-      expect(progress, isNotNull);
-      expect(progress!.quizPassed, isTrue);
-      expect(progress.status, CheckpointStatus.inProgress);
-      expect(progress.status, isNot(CheckpointStatus.completed));
+    test(
+      'passing quiz does NOT auto-complete checkpoint until learner confirms completion',
+      () async {
+        final store = InMemoryKeyValueStore();
+        final container = ProviderContainer(
+          overrides: [
+            keyValueStoreProvider.overrideWithValue(store),
+            curriculumRepositoryProvider.overrideWithValue(
+              _MemoryCurriculumRepo(bundle),
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
 
-      await notifier.setCheckpointStatus(
-        'm03_c05',
-        CheckpointStatus.completed,
-        checkpointTitle: 'Why localhost differs across machines',
-      );
+        await container.read(learnerStateProvider.future);
+        final notifier = container.read(learnerStateProvider.notifier);
 
-      progress = container
-          .read(learnerStateProvider)
-          .requireValue
-          .checkpointProgress['m03_c05'];
-      expect(progress!.status, CheckpointStatus.completed);
-      expect(progress.completedAt, isNotNull);
-    });
+        await notifier.recordQuizAttempt(
+          QuizAttemptRecord(
+            id: 'att_1',
+            targetId: 'm03_c05',
+            attemptedAt: DateTime.utc(2026, 11, 17),
+            correctCount: 2,
+            totalCount: 2,
+            selectedOptionByQuestion: const {'q1': 'a', 'q2': 'b'},
+          ),
+          checkpointTitle: 'Why localhost differs across machines',
+        );
+
+        var progress = container
+            .read(learnerStateProvider)
+            .requireValue
+            .checkpointProgress['m03_c05'];
+        expect(progress, isNotNull);
+        expect(progress!.quizPassed, isTrue);
+        expect(progress.status, CheckpointStatus.inProgress);
+        expect(progress.status, isNot(CheckpointStatus.completed));
+
+        await notifier.setCheckpointStatus(
+          'm03_c05',
+          CheckpointStatus.completed,
+          checkpointTitle: 'Why localhost differs across machines',
+        );
+
+        progress = container
+            .read(learnerStateProvider)
+            .requireValue
+            .checkpointProgress['m03_c05'];
+        expect(progress!.status, CheckpointStatus.completed);
+        expect(progress.completedAt, isNotNull);
+      },
+    );
   });
 
   group('SearchEngine & StudyPlannerEngine', () {

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
+// ignore: deprecated_member_use
+import 'package:flutter/material.dart';
 
 import '../../../app/router/responsive_shell.dart';
 import '../../../app/theme/app_tokens.dart';
@@ -109,7 +110,8 @@ class _GlossaryScreenState extends ConsumerState<GlossaryScreen> {
                           controller: _searchController,
                           onChanged: (_) => setState(() {}),
                           decoration: InputDecoration(
-                            hintText: 'Search terms (e.g. localhost, CORS, Pydantic, RAG, Cloudflare)…',
+                            hintText:
+                                'Search terms (e.g. localhost, CORS, Pydantic, RAG, Cloudflare)…',
                             prefixIcon: const Icon(Icons.search_rounded),
                             suffixIcon: q.isEmpty
                                 ? null

@@ -1,4 +1,5 @@
-import 'package:material_ui/material_ui.dart';
+// ignore: deprecated_member_use
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -567,7 +568,8 @@ class _GlobalSearchDialogState extends ConsumerState<GlobalSearchDialog> {
                       autofocus: true,
                       onChanged: (_) => setState(() {}),
                       decoration: const InputDecoration(
-                        hintText: 'Search checkpoints, glossary, capstones, or notes…',
+                        hintText:
+                            'Search checkpoints, glossary, capstones, or notes…',
                         prefixIcon: Icon(Icons.search_rounded),
                       ),
                     ),
