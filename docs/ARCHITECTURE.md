@@ -109,6 +109,6 @@ Routing is driven by **`appRouterProvider`** (`GoRouter`):
 
 ## 5. Accessibility & Visual Design
 
-- Uses `package:material_ui/material_ui.dart` for Material 3 components across `AppTheme.light()` and `AppTheme.dark()` (calm navy/slate surfaces with teal primary and muted violet accents).
+- Uses `package:flutter/material.dart` for Material 3 components across `AppTheme.light()` and `AppTheme.dark()` (calm navy/slate surfaces with teal primary and muted violet accents) so builds stay compatible across Flutter `3.41+` and `3.50`.
 - `AppMotion.duration(context, ...)` respects `MediaQuery.disableAnimationsOf(context)` to zero animation durations when reduced motion is enabled.
 - Code blocks wrap horizontally inside `SingleChildScrollView(scrollDirection: Axis.horizontal)` so wide snippets never cause horizontal page overflow on narrow viewports.

@@ -29,6 +29,12 @@ A calm, offline-first Flutter learning application built to take learners—both
 
 ---
 
+## Try Live (No Local Setup Needed)
+
+- **Live Web App (GitHub Pages)**: [https://zyadwaled780-cmd.github.io/project-1/](https://zyadwaled780-cmd.github.io/project-1/)
+
+---
+
 ## Documentation
 
 - [Architecture Overview](docs/ARCHITECTURE.md)
@@ -40,13 +46,18 @@ A calm, offline-first Flutter learning application built to take learners—both
 
 ### Prerequisites
 
-- **Flutter SDK** (`stable`, verified on Flutter `3.50.0` / Dart `^3.14.0`)
-- Chrome (for running or inspecting the web app locally)
+- **Flutter SDK** (`Dart >=3.10.0 <4.0.0`, tested with Flutter `3.50.0`, and dependency-compatible with Flutter `3.41+` / Dart `3.11.5`)
+- Google Chrome (for running or inspecting the web app locally)
 
 ### Run & Verify
 
 ```bash
-# Install packages
+# Clone into a regular user directory (avoid C:\WINDOWS\system32 on Windows)
+git clone https://github.com/zyadwaled780-cmd/project-1.git
+cd project-1
+
+# Install packages (if switching across Dart versions such as 3.11.5 vs 3.14.0,
+# run `flutter pub upgrade` if pub asks to refresh pubspec.lock)
 flutter pub get
 
 # Check formatting & static analysis
@@ -65,8 +76,8 @@ flutter build web --release --no-web-resources-cdn
 
 ### Platform Status & Honesty Note
 
-- **Verified**: All unit and widget tests (`flutter test`), static analysis (`flutter analyze`), formatting (`dart format`), production Web compilation (`flutter build web --release --no-web-resources-cdn`), and a headless Chromium boot check confirming HTTP 200 asset loading for CanvasKit and all 10 curriculum JSON files with zero runtime console errors have been executed and verified.
-- **Cross-platform compatibility**: Feature/repository abstractions avoid web-only imports outside conditional `json_transfer_web.dart` so `android/` and `ios/` targets remain structurally compatible in source. Android and iOS builds were **not** executed or claimed as verified because Android/Xcode SDK toolchains are not configured in the verification environment.
+- **Verified**: All unit and widget tests (`flutter test` — 12/12 passing), static analysis (`flutter analyze`), formatting (`dart format`), production Web compilation (`flutter build web --release --no-web-resources-cdn`), headless Chromium local boot check, and live GitHub Pages workflow deployment have been executed and verified on Flutter `3.50.0`.
+- **Cross-platform compatibility**: UI imports (`package:flutter/material.dart`) and dependency bounds (`>=3.10.0 <4.0.0`, `flutter_riverpod 3.3.x`, `go_router 17.x`) target compatibility down to Flutter `3.41+` / Dart `3.11.5`, and `android/` + `ios/` remain cleanly isolated from web-only imports (`json_transfer_web.dart`). Android, iOS, and local Windows Dart `3.11.5` SDK builds were not executed inside this Linux `3.50.0` environment.
 
 ---
 
