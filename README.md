@@ -46,7 +46,9 @@ A calm, offline-first Flutter learning application built to take learners—both
 
 ### Prerequisites
 
-- **Flutter SDK** (`Dart >=3.10.0 <4.0.0`, tested with Flutter `3.50.0`, and dependency-compatible with Flutter `3.41+` / Dart `3.11.5`)
+- **Flutter SDK**:
+  - **Web / Desktop / Tests**: `Dart >=3.10.0 <4.0.0` (verified with Flutter `3.50.0` / Dart `3.14.0`, and dependency-compatible with Flutter `3.41+` / Dart `3.11.5`)
+  - **Local Android builds**: Flutter `3.44+` / `3.50.0` + Android Studio / Android SDK + JDK 17 or 21 (`android/` uses AGP `9.3.1` and Gradle `9.5.0`; if `flutter --version` on Windows shows Dart `3.11.5` / Flutter `3.41.x`, run `flutter upgrade` first or download the CI-built APK below)
 - Google Chrome (for running or inspecting the web app locally)
 
 ### Run & Verify
@@ -56,8 +58,8 @@ A calm, offline-first Flutter learning application built to take learners—both
 git clone https://github.com/zyadwaled780-cmd/project-1.git
 cd project-1
 
-# Install packages (if switching across Dart versions such as 3.11.5 vs 3.14.0,
-# run `flutter pub upgrade` if pub asks to refresh pubspec.lock)
+# Install packages (if switching across Dart versions, run `flutter pub upgrade`
+# if pub asks to refresh pubspec.lock)
 flutter pub get
 
 # Check formatting & static analysis
@@ -74,10 +76,49 @@ flutter run -d chrome
 flutter build web --release --no-web-resources-cdn
 ```
 
+### Install on Android Phone or Tablet
+
+#### Option A: Build & Install via Local Android Studio + Android SDK (Windows)
+
+```powershell
+# 1. Verify Android Studio, Android SDK, licenses, and JDK
+flutter doctor -v
+
+# Accept any pending Android SDK licenses if prompted
+flutter doctor --android-licenses
+
+# Ensure Flutter >= 3.44 / 3.50.0 so AGP 9.3.1 & Gradle 9.5.0 match android/
+flutter upgrade
+
+# 2. Enable Developer Options -> USB Debugging on your phone/tablet, plug in via USB, and check:
+flutter devices
+adb devices
+
+# 3. Build universal release APK (supports both 32-bit/64-bit ARM phones and tablets)
+flutter pub get
+flutter build apk --release
+
+# 4. Install onto a connected device (use `adb -s <serial> install -r ...` if multiple devices are attached)
+adb install -r build\app\outputs\flutter-apk\app-release.apk
+```
+
+> **Note on release signing**: `android/app/build.gradle.kts` configures `release` builds with the debug signing key (`signingConfigs.getByName("debug")`) so local and CI sideloaded APKs install smoothly on personal devices. Replace this with your own keystore before Play Store distribution.
+
+#### Option B: Download Prebuilt APK from GitHub Actions
+
+1. Open [GitHub Actions](https://github.com/zyadwaled780-cmd/project-1/actions) and select the latest green **CI** workflow run.
+2. Under **Artifacts**, download **`ai-automation-hero-android-apk`**.
+3. Extract `app-release.apk` and either transfer it to your phone/tablet to install directly or run `adb install -r app-release.apk`.
+
+#### Option C: Zero-Install Browser / PWA App (No USB or SDK Needed)
+
+- Open [https://zyadwaled780-cmd.github.io/project-1/](https://zyadwaled780-cmd.github.io/project-1/) in Chrome, Edge, or Samsung Internet on your phone or tablet and choose **Install app** / **Add to Home screen**.
+
 ### Platform Status & Honesty Note
 
-- **Verified**: All unit and widget tests (`flutter test` — 12/12 passing), static analysis (`flutter analyze`), formatting (`dart format`), production Web compilation (`flutter build web --release --no-web-resources-cdn`), headless Chromium local boot check, and live GitHub Pages workflow deployment have been executed and verified on Flutter `3.50.0`.
-- **Cross-platform compatibility**: UI imports (`package:flutter/material.dart`) and dependency bounds (`>=3.10.0 <4.0.0`, `flutter_riverpod 3.3.x`, `go_router 17.x`) target compatibility down to Flutter `3.41+` / Dart `3.11.5`, and `android/` + `ios/` remain cleanly isolated from web-only imports (`json_transfer_web.dart`). Android, iOS, and local Windows Dart `3.11.5` SDK builds were not executed inside this Linux `3.50.0` environment.
+- **Verified in Linux VM (`Flutter 3.50.0`)**: Formatting (`dart format`), static analysis (`flutter analyze`), all unit and widget tests (`flutter test`), production Web build (`flutter build web --release --no-web-resources-cdn`), and headless Chromium local boot check.
+- **Verified in GitHub Actions (`ubuntu-latest`, `Flutter 3.50.0` + JDK 21)**: Full check suite, live GitHub Pages deployment, and release Android APK compilation (`flutter build apk --release`, `app-release.apk`).
+- **Not executed in CI / remote VM**: iOS builds (macOS/Xcode required), direct Windows `Dart 3.11.5` execution on your local machine, and physical on-device manual testing on Honor 50 Lite or Galaxy Tab A7 hardware.
 
 ---
 

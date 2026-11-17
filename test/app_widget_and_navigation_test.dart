@@ -348,4 +348,38 @@ void main() {
       expect(tester.takeException(), isNull);
     },
   );
+
+  testWidgets(
+    'tablet portrait/landscape and phone landscape render cleanly without overflow',
+    (tester) async {
+      // Tablet landscape (e.g. 10.4" tablet): shows desktop sidebar.
+      tester.view.physicalSize = const Size(1000, 600);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(buildApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Explore Dashboard'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Search curriculum…'), findsOneWidget);
+      expect(find.byType(NavigationBar), findsNothing);
+      expect(tester.takeException(), isNull);
+
+      // Tablet portrait: switches cleanly to bottom NavigationBar.
+      tester.view.physicalSize = const Size(600, 1000);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(NavigationBar), findsOneWidget);
+      expect(tester.takeException(), isNull);
+
+      // Phone landscape (short viewport height): sidebar ListView scrolls without overflow.
+      tester.view.physicalSize = const Size(844, 390);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Search curriculum…'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
 }
