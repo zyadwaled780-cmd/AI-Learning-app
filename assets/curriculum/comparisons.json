@@ -1,0 +1,355 @@
+{
+  "comparisons": [
+    {
+      "id": "comp_langchain_vs_langgraph",
+      "title": "LangChain vs. LangGraph",
+      "leftTitle": "LangChain",
+      "rightTitle": "LangGraph",
+      "summary": "LangChain provides model, prompt, tool, and retriever abstractions (plus create_agent); LangGraph is the lower-level stateful orchestration runtime powering durable graphs, loops, persistence, and human-in-the-loop interrupts.",
+      "rows": [
+        {
+          "aspect": "Primary Purpose",
+          "left": "Standard model/tool/retriever interfaces and high-level agent harness",
+          "right": "Explicit state machine (nodes, edges, reducers) for durable execution"
+        },
+        {
+          "aspect": "Control Flow",
+          "left": "Linear chains or managed create_agent loop",
+          "right": "Explicit branching, cycles, retries, and deterministic Python routing"
+        },
+        {
+          "aspect": "State & Persistence",
+          "left": "Message history or short-lived chain inputs",
+          "right": "Typed state channels with built-in checkpointers across pauses"
+        },
+        {
+          "aspect": "Human-in-the-Loop",
+          "left": "Requires middleware or custom callbacks",
+          "right": "First-class interrupt() + Command(resume=...) checkpoints"
+        }
+      ],
+      "whenToChooseLeft": "When you need portable chat model wrappers, structured output helpers, or a simple sequential pipeline without complex state pauses.",
+      "whenToChooseRight": "When a workflow needs explicit branching, loops with guardrails, durable checkpointing, or pausing for human approval before external actions.",
+      "checkpointIds": [
+        "m08_c11",
+        "m10_c14"
+      ]
+    },
+    {
+      "id": "comp_pydantic_vs_dict",
+      "title": "Pydantic Models vs. Ordinary Dictionaries",
+      "leftTitle": "Pydantic BaseModel",
+      "rightTitle": "Ordinary dict",
+      "summary": "Python dictionaries accept any keys and types at runtime without complaint; Pydantic validates, coerces, documents, and exports JSON Schema at runtime.",
+      "rows": [
+        {
+          "aspect": "Runtime Validation",
+          "left": "Enforces types, constraints, and custom validators immediately",
+          "right": "No validation; KeyError or wrong types fail later downstream"
+        },
+        {
+          "aspect": "Schema Contract",
+          "left": "Generates OpenAPI & JSON Schema automatically",
+          "right": "Invisible structure; must be documented manually"
+        },
+        {
+          "aspect": "Nested Structures",
+          "left": "Recursively validates nested models and lists",
+          "right": "Requires tedious manual isinstance checks everywhere"
+        },
+        {
+          "aspect": "LLM Output Parsing",
+          "left": "Catches missing/invalid fields with structured ValidationError",
+          "right": "Silent bugs when an LLM renames or drops a key"
+        }
+      ],
+      "whenToChooseLeft": "At every API boundary, webhook payload, config object, and LLM structured-output parser.",
+      "whenToChooseRight": "For tiny internal scratch maps or dynamic arbitrary key-value bags inside a tightly scoped function.",
+      "checkpointIds": [
+        "m07_c01",
+        "m07_c02"
+      ]
+    },
+    {
+      "id": "comp_workflow_vs_agent",
+      "title": "Workflow vs. Agent",
+      "leftTitle": "Deterministic Workflow",
+      "rightTitle": "Autonomous Agent",
+      "summary": "A workflow executes a known sequence of steps defined by the engineer; an agent lets an LLM dynamically choose which tools to call and in what order.",
+      "rows": [
+        {
+          "aspect": "Who Chooses Next Step",
+          "left": "Your code / workflow graph (predictable path)",
+          "right": "The LLM at runtime based on observations"
+        },
+        {
+          "aspect": "Cost & Latency",
+          "left": "Predictable, bounded, usually faster and cheaper",
+          "right": "Variable; extra reasoning loops add tokens and seconds"
+        },
+        {
+          "aspect": "Reliability & Testing",
+          "left": "High; easy to unit test and replay step by step",
+          "right": "Harder; requires loop limits, tool validation, and evals"
+        },
+        {
+          "aspect": "Best Fit",
+          "left": "Support ticket intake, extraction, structured routing",
+          "right": "Open-ended research where required tool sequence varies per query"
+        }
+      ],
+      "whenToChooseLeft": "Whenever the process steps are known ahead of time (which covers 80%+ of business automations).",
+      "whenToChooseRight": "Only when the path cannot be predetermined and the task genuinely benefits from iterative tool exploration inside strict guardrails.",
+      "checkpointIds": [
+        "m01_c02",
+        "m10_c14"
+      ]
+    },
+    {
+      "id": "comp_localhost_vs_public",
+      "title": "Localhost vs. Public Host",
+      "leftTitle": "Localhost (127.0.0.1)",
+      "rightTitle": "Public Host / Domain",
+      "summary": "Localhost always refers to the exact machine or container executing the code right now\u2014not your laptop as seen from the cloud, and not a sibling Docker container.",
+      "rows": [
+        {
+          "aspect": "Reachability",
+          "left": "Only processes inside the same OS/container network namespace",
+          "right": "Reachable across the internet via DNS + public IP or tunnel"
+        },
+        {
+          "aspect": "Security Exposure",
+          "left": "Private to that host by default",
+          "right": "Exposed to scanners and bots; requires HTTPS, auth, and firewalling"
+        },
+        {
+          "aspect": "Docker Gotcha",
+          "left": "127.0.0.1 inside n8n container points to n8n itself, not FastAPI!",
+          "right": "Service names on a shared Docker network or public DNS resolve across hosts"
+        },
+        {
+          "aspect": "Webhooks",
+          "left": "External SaaS providers cannot reach http://localhost",
+          "right": "External webhooks require an HTTPS public endpoint or tunnel"
+        }
+      ],
+      "whenToChooseLeft": "During local development on your own machine when caller and server share the same host OS.",
+      "whenToChooseRight": "When external SaaS webhooks, remote collaborators, or n8n Cloud must reach your FastAPI service.",
+      "checkpointIds": [
+        "m03_c04",
+        "m03_c05"
+      ]
+    },
+    {
+      "id": "comp_http_vs_https",
+      "title": "HTTP vs. HTTPS",
+      "leftTitle": "HTTP (Plaintext)",
+      "rightTitle": "HTTPS (HTTP over TLS)",
+      "summary": "HTTP defines request/response semantics in plaintext; HTTPS wraps HTTP inside TLS encryption and server identity verification.",
+      "rows": [
+        {
+          "aspect": "Confidentiality",
+          "left": "Headers, bearer tokens, and bodies travel unencrypted",
+          "right": "Encrypted end-to-end between client and TLS terminator"
+        },
+        {
+          "aspect": "Server Identity",
+          "left": "No cryptographic proof you are talking to the real server",
+          "right": "TLS certificate proves domain ownership via trusted CA"
+        },
+        {
+          "aspect": "Integrity",
+          "left": "Intermediaries on the path can read or tamper with payloads",
+          "right": "Tampering breaks TLS MAC verification and fails immediately"
+        },
+        {
+          "aspect": "Webhook Compatibility",
+          "left": "Rejected by almost all production webhook providers (Slack, Stripe, Telegram)",
+          "right": "Required standard for all public APIs and webhook endpoints"
+        }
+      ],
+      "whenToChooseLeft": "Strictly inside isolated localhost testing or behind a trusted private VPC/container network after TLS termination.",
+      "whenToChooseRight": "For every public endpoint, API credential exchange, webhook receiver, and client-facing app.",
+      "checkpointIds": [
+        "m03_c09",
+        "m14_c07"
+      ]
+    },
+    {
+      "id": "comp_webhook_vs_polling",
+      "title": "Webhook vs. Polling",
+      "leftTitle": "Webhook (Push)",
+      "rightTitle": "Polling (Pull)",
+      "summary": "Webhooks push an HTTP request to your endpoint the moment an event happens; polling checks an API repeatedly on a timer.",
+      "rows": [
+        {
+          "aspect": "Delivery Latency",
+          "left": "Near real-time (seconds after event occurs)",
+          "right": "Bounded by polling interval (e.g. every 1-15 minutes)"
+        },
+        {
+          "aspect": "Infrastructure Need",
+          "left": "Requires a reachable HTTPS URL and signature verification",
+          "right": "Needs only outbound HTTP requests; works behind NAT/firewalls"
+        },
+        {
+          "aspect": "Missed Events Risk",
+          "left": "If endpoint is down during retries, events can be dropped",
+          "right": "Can resume from last cursor/timestamp after downtime"
+        },
+        {
+          "aspect": "API Quota Usage",
+          "left": "Zero wasted calls when nothing changes",
+          "right": "Uses rate-limit budget even when inbox is empty"
+        }
+      ],
+      "whenToChooseLeft": "When the source system supports reliable signed webhooks and you want immediate event processing.",
+      "whenToChooseRight": "When the source lacks webhooks, sits behind a firewall without inbound access, or needs a periodic reconciliation sweep.",
+      "checkpointIds": [
+        "m03_c11",
+        "m12_c04"
+      ]
+    },
+    {
+      "id": "comp_rag_vs_finetuning",
+      "title": "RAG vs. Fine-Tuning",
+      "leftTitle": "RAG (Retrieval-Augmented Generation)",
+      "rightTitle": "Fine-Tuning",
+      "summary": "RAG injects fresh, permission-filtered facts into the prompt at query time; fine-tuning updates model weights offline to teach style, format, or specialized task patterns.",
+      "rows": [
+        {
+          "aspect": "Knowledge Freshness",
+          "left": "Updates immediately when docs change or are deleted",
+          "right": "Frozen at training time; requires retraining to update facts"
+        },
+        {
+          "aspect": "Access Control",
+          "left": "Can filter retrieved chunks per user/tenant at runtime",
+          "right": "Memorized weights cannot enforce per-user document ACLs"
+        },
+        {
+          "aspect": "Source Attribution",
+          "left": "Can cite exact document IDs and snippets retrieved",
+          "right": "Cannot reliably cite which training row produced a claim"
+        },
+        {
+          "aspect": "Best Use Case",
+          "left": "Help docs, company policies, ticket history, changing catalogs",
+          "right": "Teaching consistent tone, compact domain classification, or latency optimization"
+        }
+      ],
+      "whenToChooseLeft": "Whenever answers depend on changing facts, company policies, citations, or user permissions.",
+      "whenToChooseRight": "When you already have a clean, curated dataset and need consistent format, domain tone, or smaller-model performance.",
+      "checkpointIds": [
+        "m09_c01",
+        "m09_c13"
+      ]
+    },
+    {
+      "id": "comp_cf_tunnel_vs_hosting",
+      "title": "Cloudflare Tunnel vs. Hosting",
+      "leftTitle": "Cloudflare Tunnel (cloudflared)",
+      "rightTitle": "Hosting (VPS / Container Platform)",
+      "summary": "Hosting runs your FastAPI/n8n processes on compute with CPU, RAM, and disk; Cloudflare Tunnel only creates a secure outbound bridge from where your app already runs to Cloudflare's edge.",
+      "rows": [
+        {
+          "aspect": "Runs Your Code?",
+          "left": "No \u2014 cloudflared forwards traffic to a server running elsewhere",
+          "right": "Yes \u2014 provides the compute, RAM, and runtime for your containers"
+        },
+        {
+          "aspect": "Open Inbound Ports?",
+          "left": "Not needed; establishes outbound encrypted connections",
+          "right": "Usually requires firewall rules (80/443) unless paired with Tunnel"
+        },
+        {
+          "aspect": "Authentication?",
+          "left": "Connectivity layer only \u2014 NOT application authentication",
+          "right": "Your app (plus Access/proxy) enforces auth and authorization"
+        },
+        {
+          "aspect": "Uptime Dependency",
+          "left": "If your local machine sleeps or shuts down, tunnel returns 502/530",
+          "right": "Cloud VPS/PaaS stays online 24/7 independent of your laptop"
+        }
+      ],
+      "whenToChooseLeft": "To safely expose a self-hosted homelab/VPC service without opening inbound firewall ports (paired with Access/app auth).",
+      "whenToChooseRight": "Always required somewhere to actually execute your FastAPI, database, and n8n processes reliably 24/7.",
+      "checkpointIds": [
+        "m14_c04",
+        "m14_c11",
+        "m14_c14"
+      ]
+    },
+    {
+      "id": "comp_n8n_vs_python_service",
+      "title": "n8n Orchestration vs. Python Backend Service",
+      "leftTitle": "n8n Workflow",
+      "rightTitle": "Python (FastAPI) Service",
+      "summary": "n8n excels at visual SaaS integrations, OAuth connectors, schedules, and webhook triggers; Python excels at complex data contracts, testing, AI logic, and versioned code.",
+      "rows": [
+        {
+          "aspect": "SaaS Connectors",
+          "left": "Hundreds of built-in OAuth triggers and app nodes",
+          "right": "Must write and maintain SDK/HTTP client glue manually"
+        },
+        {
+          "aspect": "Automated Testing",
+          "left": "Hard to unit test complex branching visually",
+          "right": "First-class pytest unit/integration/eval suites in CI"
+        },
+        {
+          "aspect": "Data Validation",
+          "left": "Basic expressions/IF nodes become brittle at scale",
+          "right": "Pydantic BaseModels guarantee strict runtime contracts"
+        },
+        {
+          "aspect": "Version Control",
+          "left": "Large JSON exports are noisy to diff and review",
+          "right": "Clean modular Python diffs, PR reviews, and linters"
+        }
+      ],
+      "whenToChooseLeft": "For triggers (Gmail/Webhook/Slack), CRM connectors, human-notification routing, and non-fragile SaaS glue.",
+      "whenToChooseRight": "For Pydantic validation, LLM calls, RAG pipelines, LangGraph state machines, complex loops, and automated evals.",
+      "checkpointIds": [
+        "m12_c01",
+        "m12_c02"
+      ]
+    },
+    {
+      "id": "comp_authN_vs_authZ",
+      "title": "Authentication (AuthN) vs. Authorization (AuthZ)",
+      "leftTitle": "Authentication (Who are you?)",
+      "rightTitle": "Authorization (What can you do?)",
+      "summary": "Authentication verifies identity (API key, JWT, user session); Authorization checks whether that verified identity is allowed to access a specific resource or action.",
+      "rows": [
+        {
+          "aspect": "Question Answered",
+          "left": "Is this caller really Service A or User Alice?",
+          "right": "May Alice read Tenant B's support tickets or issue refunds?"
+        },
+        {
+          "aspect": "HTTP Status on Failure",
+          "left": "401 Unauthorized (missing or invalid credentials)",
+          "right": "403 Forbidden (valid identity, insufficient permission)"
+        },
+        {
+          "aspect": "RAG Example",
+          "left": "Validating bearer token on /v1/search",
+          "right": "Filtering vector search chunks by user's tenant_id and role"
+        },
+        {
+          "aspect": "Common Bug",
+          "left": "Trusting an unverified X-User-Id header",
+          "right": "Checking login once at gateway but forgetting row-level tenant checks"
+        }
+      ],
+      "whenToChooseLeft": "First step on every protected endpoint, webhook receiver, or internal microservice call.",
+      "whenToChooseRight": "On every data query, RAG retrieval filter, and high-impact tool call (refunds, deletions, sends).",
+      "checkpointIds": [
+        "m03_c10",
+        "m09_c12"
+      ]
+    }
+  ]
+}

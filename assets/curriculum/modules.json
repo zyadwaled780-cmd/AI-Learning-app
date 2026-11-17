@@ -1,0 +1,768 @@
+{
+  "version": "1.0.0",
+  "lastReviewedAt": "2026-11-17",
+  "modules": [
+    {
+      "id": "m01",
+      "number": 1,
+      "title": "Engineering Foundations",
+      "subtitle": "Think in systems, determinism, failure costs, and human oversight before touching frameworks.",
+      "outcome": "Map real business processes into inputs, deterministic rules, probabilistic AI boundaries, measurable ROI, and safe human checkpoints.",
+      "difficulty": "beginner",
+      "prerequisiteModuleIds": [],
+      "prerequisiteRationale": "Entry foundation for all learners, including experienced n8n builders who want stronger engineering framing.",
+      "miniProject": {
+        "title": "Support Triage Process Blueprint",
+        "brief": "Map a noisy support inbox into an engineered workflow: define inputs, outputs, deterministic filters, AI classification boundary, failure cost, and human approval gate.",
+        "steps": [
+          "List every input field arriving on a support email (sender, subject, body, timestamp, customer tier).",
+          "Separate deterministic rules (VIP domain check, spam blocklist, duplicate ticket ID) from probabilistic steps (topic classification, draft reply).",
+          "Document side effects (sending email, updating CRM, issuing refund) and decide which require human approval.",
+          "Calculate baseline time spent per ticket and estimate maximum acceptable error cost for each side effect."
+        ],
+        "acceptanceCriteria": [
+          "Process diagram clearly separates deterministic nodes from LLM steps.",
+          "Every external side effect has a documented owner and failure-cost rating.",
+          "At least two automation candidates are explicitly rejected with written rationale."
+        ]
+      },
+      "masteryChecklist": [
+        "I can explain the difference between a deterministic workflow and a probabilistic agent.",
+        "I can map inputs, outputs, and irreversible side effects before writing code or building nodes.",
+        "I can justify when NOT to use AI in an automation pipeline.",
+        "I can define human-in-the-loop checkpoints based on failure cost."
+      ],
+      "resourceLinks": [
+        {
+          "title": "LangGraph: Workflows and Agents Guide",
+          "url": "https://docs.langchain.com/oss/python/langgraph/workflows-agents",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "n8n Webhook Node Documentation",
+          "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/",
+          "source": "n8n Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m02",
+      "number": 2,
+      "title": "Computer, Terminal, and Git Foundations",
+      "subtitle": "Navigate directories, shell processes, environment variables, Git branches, and secret hygiene.",
+      "outcome": "Operate confidently in a Linux/macOS/WSL terminal, manage Git branches safely without leaking secrets, and read real stack traces.",
+      "difficulty": "beginner",
+      "prerequisiteModuleIds": [
+        "m01"
+      ],
+      "prerequisiteRationale": "Uses the engineering mindset from Module 1 to build safe local development habits before networking and Python.",
+      "miniProject": {
+        "title": "Clean Automation Repo Starter",
+        "brief": "Initialize a version-controlled Python automation repository with .gitignore, .env.example, branch workflow, and clean commit history.",
+        "steps": [
+          "Create a project directory using terminal commands and inspect paths with pwd and ls.",
+          "Initialize a Git repository, add a strict .gitignore excluding .env and .venv, and create .env.example.",
+          "Create a feature branch, add a sample config loader reading an environment variable, and merge via commit."
+        ],
+        "acceptanceCriteria": [
+          "git status shows zero tracked secrets or virtual environment directories.",
+          "Environment variable configuration is documented in .env.example.",
+          "Commit history uses clear, descriptive messages on a non-main branch."
+        ]
+      },
+      "masteryChecklist": [
+        "I can navigate paths, inspect files, and manage processes from the terminal.",
+        "I can configure environment variables without hardcoding credentials.",
+        "I can create branches, inspect diffs, and commit safely with Git.",
+        "I know how to keep API keys out of Git history and what to do if one leaks."
+      ],
+      "resourceLinks": [
+        {
+          "title": "Git Official Documentation",
+          "url": "https://git-scm.com/doc",
+          "source": "Git SCM",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "GitHub Get Started Documentation",
+          "url": "https://docs.github.com/en/get-started",
+          "source": "GitHub Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m03",
+      "number": 3,
+      "title": "Networking, HTTP, and Hosting",
+      "subtitle": "Master localhost, ports, DNS, HTTP, TLS, webhooks, proxies, CORS, and Docker container networking.",
+      "outcome": "Diagnose connection refusals, localhost mismatches, DNS errors, webhook failures, CORS issues, and Docker container bridges systematically.",
+      "difficulty": "beginner",
+      "prerequisiteModuleIds": [
+        "m02"
+      ],
+      "prerequisiteRationale": "Builds on terminal fluency so you can run curl, inspect ports, and troubleshoot container networking.",
+      "miniProject": {
+        "title": "HTTP & Docker Connectivity Lab",
+        "brief": "Diagnose and document why an n8n container cannot reach a Python service on localhost, fix the host binding and network route, and verify with curl.",
+        "steps": [
+          "Run a local HTTP listener bound first to 127.0.0.1:8000 and test with curl.",
+          "Simulate container-to-host isolation and compare localhost vs host.docker.internal vs Docker bridge service names.",
+          "Trace full HTTP request headers, status codes, timeouts, and reverse proxy forwarding headers."
+        ],
+        "acceptanceCriteria": [
+          "You can explain why 127.0.0.1 inside container A is not container B or the host machine.",
+          "curl test captures method, headers, JSON body, and HTTP status code.",
+          "Written troubleshooting checklist covers DNS, connection refused, timeout, and TLS errors."
+        ]
+      },
+      "masteryChecklist": [
+        "I understand IP addresses, ports, loopback (127.0.0.1), and host binding (0.0.0.0).",
+        "I can read HTTP methods, headers, bodies, and status codes (2xx/3xx/4xx/5xx).",
+        "I know the difference between authentication and authorization, and what CORS does NOT protect.",
+        "I can connect services across Docker networks and behind reverse proxies."
+      ],
+      "resourceLinks": [
+        {
+          "title": "MDN HTTP Overview & Guides",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+          "source": "MDN Web Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "MDN CORS Guide",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS",
+          "source": "MDN Web Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "Docker Engine Networking Overview",
+          "url": "https://docs.docker.com/engine/network/",
+          "source": "Docker Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m04",
+      "number": 4,
+      "title": "Python for Automation",
+      "subtitle": "Write clean, typed, tested Python code with virtual environments, JSON handling, logging, httpx, and async.",
+      "outcome": "Build maintainable Python automation scripts and libraries with isolated venvs, explicit exceptions, structured logs, HTTP clients, and unit tests.",
+      "difficulty": "beginner",
+      "prerequisiteModuleIds": [
+        "m02",
+        "m03"
+      ],
+      "prerequisiteRationale": "Uses terminal/venv habits from Module 2 and HTTP fundamentals from Module 3 for API client code.",
+      "miniProject": {
+        "title": "Typed Support Ticket Cleaner CLI",
+        "brief": "Write a small Python package in a virtual environment that reads raw support ticket JSON files, normalizes fields, enriches via an HTTP API with httpx, logs failures, and passes unit tests.",
+        "steps": [
+          "Create and activate a Python venv and install httpx and pytest.",
+          "Implement typed functions to parse JSON payloads, handle malformed inputs cleanly, and log structured events.",
+          "Write unit tests covering valid tickets, missing fields, and simulated HTTP timeouts."
+        ],
+        "acceptanceCriteria": [
+          "All functions include explicit Python type hints.",
+          "Malformed JSON never crashes silently; exceptions are logged with context.",
+          "Unit test suite passes cleanly offline using mocked HTTP responses."
+        ]
+      },
+      "masteryChecklist": [
+        "I isolate every Python project inside its own virtual environment.",
+        "I write typed Python functions using dictionaries, lists, exceptions, and pathlib/json.",
+        "I use logging instead of scattered print statements.",
+        "I can make async/sync HTTP requests with timeouts and write unit tests."
+      ],
+      "resourceLinks": [
+        {
+          "title": "Python venv Documentation",
+          "url": "https://docs.python.org/3/library/venv.html",
+          "source": "Python Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "Python unittest Documentation",
+          "url": "https://docs.python.org/3/library/unittest.html",
+          "source": "Python Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "HTTPX Documentation",
+          "url": "https://www.python-httpx.org/",
+          "source": "HTTPX Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m05",
+      "number": 5,
+      "title": "APIs and FastAPI",
+      "subtitle": "Design reliable REST contracts, call external APIs with retries/idempotency, and connect n8n to FastAPI.",
+      "outcome": "Expose production-style FastAPI endpoints with explicit contracts, bearer auth, retries, idempotency keys, and verified n8n connectivity.",
+      "difficulty": "intermediate",
+      "prerequisiteModuleIds": [
+        "m03",
+        "m04"
+      ],
+      "prerequisiteRationale": "Combines HTTP mechanics (Module 3) with Python functions, exceptions, and async HTTP clients (Module 4).",
+      "miniProject": {
+        "title": "FastAPI Triage Endpoint for n8n",
+        "brief": "Build a FastAPI service with /health and /v1/triage endpoints, bearer token validation, idempotency check, and call it from an n8n HTTP Request node.",
+        "steps": [
+          "Define FastAPI request/response models and implement bearer token header verification.",
+          "Add idempotency-key deduplication so retried n8n requests do not create duplicate tickets.",
+          "Connect an n8n HTTP Request node (handling localhost vs container network) and debug status codes."
+        ],
+        "acceptanceCriteria": [
+          "Requests without valid Authorization bearer token fail with 401.",
+          "Duplicate idempotency keys return the cached decision rather than re-running side effects.",
+          "n8n HTTP Request node receives deterministic JSON matching the API contract."
+        ]
+      },
+      "masteryChecklist": [
+        "I design clear API contracts before writing route handlers.",
+        "I handle pagination, 429 rate limits, and exponential backoff safely.",
+        "I use idempotency keys to protect side effects on retries.",
+        "I can connect and debug n8n HTTP Request calls to a FastAPI service."
+      ],
+      "resourceLinks": [
+        {
+          "title": "FastAPI Tutorial - User Guide",
+          "url": "https://fastapi.tiangolo.com/tutorial/",
+          "source": "FastAPI Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "MDN HTTP Status Codes",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
+          "source": "MDN Web Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "n8n HTTP Request Node Docs",
+          "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.httprequest/",
+          "source": "n8n Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m06",
+      "number": 6,
+      "title": "LLM Fundamentals",
+      "subtitle": "Understand tokens, context limits, sampling, hallucinations, prompt boundaries, structured outputs, and tool calling.",
+      "outcome": "Call LLM APIs directly without framework magic, enforce strict instruction/data separation, demand structured JSON, and know when NOT to use an LLM.",
+      "difficulty": "intermediate",
+      "prerequisiteModuleIds": [
+        "m01",
+        "m04",
+        "m05"
+      ],
+      "prerequisiteRationale": "Requires engineering cost awareness (M01) and Python HTTP API skills (M04-M05) to call model endpoints directly.",
+      "miniProject": {
+        "title": "Direct-API Support Email Classifier",
+        "brief": "Write a plain Python script (no LangChain yet) calling an LLM HTTP API or mock harness to classify support emails into JSON with latency/token tracking.",
+        "steps": [
+          "Separate system instructions from untrusted email body delimiters.",
+          "Request structured JSON output and measure token counts and latency per ticket.",
+          "Compare deterministic regex/rule pre-filters against LLM classification on 15 test emails."
+        ],
+        "acceptanceCriteria": [
+          "No framework wrappers are used; raw HTTP payload and response parsing are explicit.",
+          "Untrusted email text is wrapped clearly and never concatenated into system instructions.",
+          "Every run records input tokens, output tokens, and latency."
+        ]
+      },
+      "masteryChecklist": [
+        "I understand tokens, context windows, temperature, and why models hallucinate.",
+        "I separate trusted system instructions from untrusted user/external data.",
+        "I can explain structured outputs and tool calling as JSON contracts, not magic.",
+        "I benchmark direct API calls and avoid putting an LLM in deterministic steps."
+      ],
+      "resourceLinks": [
+        {
+          "title": "OWASP Top 10 for LLM Applications",
+          "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+          "source": "OWASP",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "MDN HTTP Methods Reference",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods",
+          "source": "MDN Web Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m07",
+      "number": 7,
+      "title": "Pydantic and Data Contracts",
+      "subtitle": "Enforce runtime validation, nested schemas, enums, validators, JSON Schema, and safe handling of LLM outputs.",
+      "outcome": "Build airtight data contracts with Pydantic v2 that reject malformed LLM outputs safely and distinguish syntax validity from factual accuracy.",
+      "difficulty": "intermediate",
+      "prerequisiteModuleIds": [
+        "m04",
+        "m05",
+        "m06"
+      ],
+      "prerequisiteRationale": "Connects Python type hints (M04), FastAPI payloads (M05), and structured LLM output needs (M06).",
+      "miniProject": {
+        "title": "Support Ticket Contract Validator",
+        "brief": "Create Pydantic v2 models for incoming n8n support webhooks and outgoing LLM triage decisions with Enums, field constraints, cross-field validators, and fallback routing.",
+        "steps": [
+          "Define TicketInput and TriageDecision BaseModel schemas using Literal/Enum categories and bounded confidence scores.",
+          "Add @field_validator and @model_validator rules (e.g., refund_amount requires order_id).",
+          "Write tests feeding valid, partial, and adversarial LLM JSON outputs through model_validate_json()."
+        ],
+        "acceptanceCriteria": [
+          "Invalid categories, missing required IDs, or out-of-range scores raise ValidationError cleanly.",
+          "Validation errors route to a safe fallback review queue rather than crashing the API.",
+          "JSON Schema exported via model_json_schema() matches expected LLM output format."
+        ]
+      },
+      "masteryChecklist": [
+        "I know why Python type hints alone do not validate data at runtime.",
+        "I use Pydantic BaseModel, Field constraints, Literal/Enum, and nested models.",
+        "I write custom field and model validators and handle ValidationError gracefully.",
+        "I remember that valid JSON syntax does NOT prove an LLM output is factually true."
+      ],
+      "resourceLinks": [
+        {
+          "title": "Pydantic Models Documentation",
+          "url": "https://docs.pydantic.dev/latest/concepts/models/",
+          "source": "Pydantic Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "Pydantic Validators Documentation",
+          "url": "https://docs.pydantic.dev/latest/concepts/validators/",
+          "source": "Pydantic Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "Pydantic JSON Schema Documentation",
+          "url": "https://docs.pydantic.dev/latest/concepts/json_schema/",
+          "source": "Pydantic Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m08",
+      "number": 8,
+      "title": "LangChain Foundations",
+      "subtitle": "Understand LangChain abstractions, model interfaces, structured output, tools, inspection, and when plain Python wins.",
+      "outcome": "Use LangChain selectively for model portability, structured output, and tool schemas while inspecting intermediate calls and avoiding abstraction bloat.",
+      "difficulty": "intermediate",
+      "prerequisiteModuleIds": [
+        "m06",
+        "m07"
+      ],
+      "prerequisiteRationale": "Only makes sense after learning direct LLM calls (M06) and Pydantic schemas (M07) so abstractions remain transparent.",
+      "miniProject": {
+        "title": "Portable Triage Chain vs. Plain Python Comparison",
+        "brief": "Implement the support triage classifier using LangChain model + with_structured_output(TriageDecision) and compare readability, testability, and trace visibility against plain Python.",
+        "steps": [
+          "Create a model-agnostic chat model wrapper with structured Pydantic output.",
+          "Define a read-only customer-lookup tool schema and inspect generated tool calls.",
+          "Write a short engineering decision note on when LangChain saves effort vs adds indirection."
+        ],
+        "acceptanceCriteria": [
+          "Intermediate prompt, tool call, and raw token usage are logged clearly.",
+          "Pydantic contract validation enforces output shape.",
+          "Side-by-side comparison documents trade-offs against direct SDK/HTTP calls."
+        ]
+      },
+      "masteryChecklist": [
+        "I know what LangChain provides (model interfaces, messages, tools, retrievers) and what it hides.",
+        "I can attach Pydantic structured outputs and inspect intermediate tool calls.",
+        "I understand how LangChain's create_agent runs on LangGraph under the hood.",
+        "I choose plain Python when a single direct API call is simpler and clearer."
+      ],
+      "resourceLinks": [
+        {
+          "title": "LangChain Python Overview",
+          "url": "https://docs.langchain.com/oss/python/langchain/overview",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "LangChain Agents Guide",
+          "url": "https://docs.langchain.com/oss/python/langchain/agents",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m09",
+      "number": 9,
+      "title": "Retrieval and RAG",
+      "subtitle": "Design document loading, chunking, embeddings, hybrid search, metadata ACL filtering, attribution, and retrieval evals.",
+      "outcome": "Build grounded retrieval pipelines that enforce access control, cite sources, handle deletions, and evaluate retrieval separately from generation.",
+      "difficulty": "intermediate",
+      "prerequisiteModuleIds": [
+        "m06",
+        "m07",
+        "m08"
+      ],
+      "prerequisiteRationale": "Needs LLM context limits (M06), Pydantic metadata schemas (M07), and retriever abstractions (M08).",
+      "miniProject": {
+        "title": "Help-Center Grounded Retrieval Pipeline",
+        "brief": "Index a set of support policy Markdown docs with metadata (product, audience, updated_at), implement hybrid keyword+semantic search with ACL filtering, and test citation accuracy.",
+        "steps": [
+          "Chunk help articles cleanly by section heading while preserving source URL and tenant metadata.",
+          "Implement metadata filtering so internal-only runbooks never leak into customer replies.",
+          "Measure Recall@K on 10 representative support queries before touching the answer prompt."
+        ],
+        "acceptanceCriteria": [
+          "Retrieved chunks carry verifiable doc IDs and section titles.",
+          "Unauthorized tenant or internal documents are excluded before context assembly.",
+          "Retrieval metrics are measured independently of LLM prose quality."
+        ]
+      },
+      "masteryChecklist": [
+        "I know when retrieval (RAG) is better than prompt stuffing or fine-tuning.",
+        "I design chunk boundaries and metadata filters for precision and access control.",
+        "I combine keyword and vector search (hybrid retrieval) and understand reranking.",
+        "I know why RAG reduces but never completely eliminates hallucinations."
+      ],
+      "resourceLinks": [
+        {
+          "title": "LangGraph Agentic RAG Tutorial",
+          "url": "https://docs.langchain.com/oss/python/langgraph/agentic-rag",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "Pydantic Serialization Concepts",
+          "url": "https://docs.pydantic.dev/latest/concepts/serialization/",
+          "source": "Pydantic Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m10",
+      "number": 10,
+      "title": "LangGraph Fundamentals",
+      "subtitle": "Build explicit stateful graphs with nodes, conditional edges, reducers, checkpointing, interrupts, and safe side effects.",
+      "outcome": "Architect durable, resumable workflows using LangGraph State, Nodes, Conditional Edges, Checkpointers, and Human-in-the-Loop interrupts.",
+      "difficulty": "advanced",
+      "prerequisiteModuleIds": [
+        "m07",
+        "m08",
+        "m09"
+      ],
+      "prerequisiteRationale": "LangGraph builds directly on typed state schemas (M07), model/tool interfaces (M08), and retrieval steps (M09).",
+      "miniProject": {
+        "title": "Human-Approved Triage State Graph",
+        "brief": "Build a LangGraph StateGraph that classifies a support email, retrieves policy chunks, pauses at an interrupt() before sending an external reply, and resumes cleanly after human approval.",
+        "steps": [
+          "Define a typed graph State with message reducer and explicit approval fields.",
+          "Add deterministic validation, retrieval, draft, and conditional routing edges.",
+          "Attach a checkpointer, trigger interrupt() before email dispatch, and resume with Command(resume=...)."
+        ],
+        "acceptanceCriteria": [
+          "Graph enforces a hard maximum step/retry limit and clean termination edge.",
+          "State survives pause/resume across separate invocations using a thread_id.",
+          "Side-effect node executes only after explicit approval and remains idempotent."
+        ]
+      },
+      "masteryChecklist": [
+        "I model shared workflow state with explicit channels and reducers.",
+        "I combine deterministic Python nodes and conditional routing with LLM steps.",
+        "I implement persistence checkpoints and human-approval interrupts safely.",
+        "I know when to use a StateGraph vs a simple chain vs an autonomous agent."
+      ],
+      "resourceLinks": [
+        {
+          "title": "LangGraph Overview",
+          "url": "https://docs.langchain.com/oss/python/langgraph/overview",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "LangGraph Graph API",
+          "url": "https://docs.langchain.com/oss/python/langgraph/graph-api",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "LangGraph Persistence",
+          "url": "https://docs.langchain.com/oss/python/langgraph/persistence",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "LangGraph Interrupts (Human-in-the-Loop)",
+          "url": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m11",
+      "number": 11,
+      "title": "Agent Engineering",
+      "subtitle": "Enforce strict tool permissions, loop/budget caps, prompt-injection defenses, escalation paths, and single-vs-multi-agent discipline.",
+      "outcome": "Engineer bounded agents that resist untrusted prompt injection, validate tool arguments, escalate ambiguity, and earn autonomy only where justified.",
+      "difficulty": "advanced",
+      "prerequisiteModuleIds": [
+        "m09",
+        "m10"
+      ],
+      "prerequisiteRationale": "Requires retrieval trust boundaries (M09) and explicit graph state/interrupt control (M10).",
+      "miniProject": {
+        "title": "Hardened Support Agent Guardrail Harness",
+        "brief": "Take an unbounded tool-calling agent and harden it with least-privilege tool schemas, max iteration/token budgets, prompt-injection isolation, and human escalation rules.",
+        "steps": [
+          "Separate read-only tools from write/destructive tools requiring human confirmation.",
+          "Test the agent against malicious instructions hidden inside retrieved support attachments.",
+          "Enforce iteration budget, tool-result Pydantic checks, and automatic escalation on missing info."
+        ],
+        "acceptanceCriteria": [
+          "Injected instructions in retrieved documents cannot trigger unauthorized tool calls.",
+          "Agent terminates gracefully when step or token budget is reached.",
+          "Missing account data triggers clarification/escalation instead of guessing."
+        ]
+      },
+      "masteryChecklist": [
+        "I scope agent tool permissions using least privilege and confirm risky writes.",
+        "I defend against prompt injection in user inputs and retrieved documents.",
+        "I enforce loop limits, cost caps, and deterministic validation of tool arguments.",
+        "I understand why adding more agents often reduces reliability compared to a well-structured single workflow."
+      ],
+      "resourceLinks": [
+        {
+          "title": "OWASP Top 10 for LLM Applications",
+          "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+          "source": "OWASP",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "LangGraph Workflows & Agents",
+          "url": "https://docs.langchain.com/oss/python/langgraph/workflows-agents",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m12",
+      "number": 12,
+      "title": "n8n + Python + AI Integration",
+      "subtitle": "Split orchestration cleanly between n8n and FastAPI using service auth, async jobs, callbacks, idempotency, and dead-letter queues.",
+      "outcome": "Architect production hybrid systems where n8n handles triggers/SaaS glue and FastAPI owns Pydantic contracts, AI logic, retries, and approval callbacks.",
+      "difficulty": "advanced",
+      "prerequisiteModuleIds": [
+        "m05",
+        "m07",
+        "m10"
+      ],
+      "prerequisiteRationale": "Unifies FastAPI + n8n HTTP bridges (M05), Pydantic contracts (M07), and LangGraph approvals (M10).",
+      "miniProject": {
+        "title": "Async n8n-to-FastAPI Support Pipeline",
+        "brief": "Connect an n8n Email/Webhook trigger to a FastAPI async job endpoint that immediately returns 202 Accepted, processes via LangGraph, calls back an n8n Webhook for Slack/email approval, and logs dead-letter failures.",
+        "steps": [
+          "Keep trigger, CRM connectors, and Slack notifications in n8n; move validation, RAG, and AI triage to FastAPI.",
+          "Authenticate n8n -> FastAPI requests with scoped API key / HMAC signature and FastAPI -> n8n callbacks.",
+          "Implement idempotency keys and a failure queue workflow in n8n for unrecoverable errors."
+        ],
+        "acceptanceCriteria": [
+          "Long-running AI jobs never time out n8n HTTP Request nodes (uses 202 + callback pattern).",
+          "Duplicate webhook deliveries from email/SaaS providers produce only one ticket action.",
+          "Failed payloads land in an inspectable failure queue rather than disappearing silently."
+        ]
+      },
+      "masteryChecklist": [
+        "I know what belongs in n8n vs what belongs in a Python FastAPI service.",
+        "I implement shared-secret or signed webhook authentication between n8n and Python.",
+        "I design async 202 + callback patterns to avoid HTTP request timeouts.",
+        "I separate retry boundaries and route poisoned payloads to failure queues."
+      ],
+      "resourceLinks": [
+        {
+          "title": "n8n Webhook Credentials Docs",
+          "url": "https://docs.n8n.io/integrations/builtin/credentials/webhook/",
+          "source": "n8n Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "n8n HTTP Request Node Docs",
+          "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.httprequest/",
+          "source": "n8n Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "FastAPI Background & Async Docs",
+          "url": "https://fastapi.tiangolo.com/async/",
+          "source": "FastAPI Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m13",
+      "number": 13,
+      "title": "Evaluation and Observability",
+      "subtitle": "Build test datasets, measure extraction/retrieval/tool metrics, prevent regressions, trace latency/cost, and redact PII.",
+      "outcome": "Prove whether prompt, retrieval, or model changes actually improved quality using deterministic evaluations, traces, and privacy-safe logs.",
+      "difficulty": "advanced",
+      "prerequisiteModuleIds": [
+        "m06",
+        "m09",
+        "m11"
+      ],
+      "prerequisiteRationale": "Evaluates the LLM calls (M06), RAG retrieval (M09), and agent tool choices (M11) built in earlier modules.",
+      "miniProject": {
+        "title": "Automated Triage Eval & Trace Suite",
+        "brief": "Create a 25-case labeled JSON dataset (normal, edge, and adversarial tickets), run automated pytest evaluations for classification accuracy, retrieval recall, and tool-arg correctness, and log redacted traces.",
+        "steps": [
+          "Curate realistic ticket test cases including multi-intent, angry tone, missing IDs, and prompt-injection payloads.",
+          "Separate retrieval metrics (Recall@K) from classification precision/recall and tool-call schema checks.",
+          "Verify PII scrubbing removes email addresses/tokens from logs while keeping correlation IDs."
+        ],
+        "acceptanceCriteria": [
+          "Eval suite runs deterministically in CI/local pytest and prints per-category score breakdown.",
+          "Logs capture latency, token cost, and model version without raw PII secrets.",
+          "Prompt/model comparison table prevents shipping regressions based on gut feel."
+        ]
+      },
+      "masteryChecklist": [
+        "I curate representative golden and adversarial datasets instead of cherry-picking examples.",
+        "I evaluate retrieval quality separately from final LLM generation quality.",
+        "I monitor latency, cost per run, and error rates using privacy-aware structured traces.",
+        "I treat LLM self-reported confidence scores skeptically unless calibrated empirically."
+      ],
+      "resourceLinks": [
+        {
+          "title": "Pytest Official Documentation",
+          "url": "https://docs.pytest.org/en/stable/",
+          "source": "Pytest Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "Python Logging Documentation",
+          "url": "https://docs.python.org/3/library/logging.html",
+          "source": "Python Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m14",
+      "number": 14,
+      "title": "Deployment, Cloudflare, and Security",
+      "subtitle": "Package with Docker, configure secrets safely, understand DNS/reverse proxies/TLS, Cloudflare Tunnel vs Access vs Workers, and backups.",
+      "outcome": "Ship containerized AI automation services securely behind reverse proxies or Cloudflare Tunnel + Access with least privilege and verified backups.",
+      "difficulty": "advanced",
+      "prerequisiteModuleIds": [
+        "m03",
+        "m05",
+        "m12"
+      ],
+      "prerequisiteRationale": "Applies networking/TLS/Docker basics (M03) and hybrid n8n+FastAPI services (M05, M12) to production hosting.",
+      "miniProject": {
+        "title": "Containerized Production Deployment Blueprint",
+        "brief": "Write a production Dockerfile, Compose config with healthchecks, non-root user, env secret injection, reverse proxy / n8n N8N_WEBHOOK_URL config, and Cloudflare Tunnel + Access security architecture.",
+        "steps": [
+          "Containerize the FastAPI service with a non-root user, explicit /health check, and pinned dependencies.",
+          "Configure reverse proxy / Cloudflare Tunnel routing without exposing raw database or internal ports publicly.",
+          "Add Cloudflare Access / bearer token auth verification and document backup/restore steps."
+        ],
+        "acceptanceCriteria": [
+          "No secrets are baked into Dockerfile or Docker image layers.",
+          "Application verifies its own bearer/service auth even behind Cloudflare Tunnel.",
+          "Health checks, TLS termination, and backup restoration procedure are documented and testable."
+        ]
+      },
+      "masteryChecklist": [
+        "I distinguish DNS, CDN caching, origin hosting, Cloudflare Tunnel, Cloudflare Access, and Workers.",
+        "I never treat Cloudflare Tunnel alone as application authentication.",
+        "I package services in Docker with health checks, non-root users, and externalized secrets.",
+        "I configure n8n reverse-proxy variables (N8N_WEBHOOK_URL, N8N_PROXY_HOPS) and plan backups."
+      ],
+      "resourceLinks": [
+        {
+          "title": "Cloudflare Tunnel Get Started",
+          "url": "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/",
+          "source": "Cloudflare Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "Cloudflare Access Policies",
+          "url": "https://developers.cloudflare.com/cloudflare-one/access-controls/policies/",
+          "source": "Cloudflare Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "Cloudflare Workers Documentation",
+          "url": "https://developers.cloudflare.com/workers/",
+          "source": "Cloudflare Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "n8n Reverse Proxy Webhook Configuration",
+          "url": "https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/configuration-examples/configure-webhook-urls-with-reverse-proxy/",
+          "source": "n8n Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "m15",
+      "number": 15,
+      "title": "Production Engineering and Career Portfolio",
+      "subtitle": "Scope narrow business problems, define SLOs and cost budgets, plan rollbacks, measure real outcomes, and present honest case studies.",
+      "outcome": "Operate AI automations sustainably with clear ownership, rollback runbooks, cost ceilings, verified ROI measurement, and interview-ready portfolio case studies.",
+      "difficulty": "advanced",
+      "prerequisiteModuleIds": [
+        "m13",
+        "m14"
+      ],
+      "prerequisiteRationale": "Synthesizes evaluation/observability (M13) and production deployment/security (M14) into end-to-end engineering ownership.",
+      "miniProject": {
+        "title": "Production Runbook & Honest Portfolio Case Study",
+        "brief": "Package one of your capstone projects with a 1-page architecture doc, SLOs, monthly token/hosting budget, rollback drill, data-retention policy, and an honest portfolio case study.",
+        "steps": [
+          "Write an architecture decision record explaining why each tool (n8n, FastAPI, Pydantic, RAG, LangGraph) was chosen or skipped.",
+          "Define latency/availability SLOs, cost alerts, rollback steps, and data-retention timelines.",
+          "Draft an interview walkthrough highlighting trade-offs, measured evaluation results, and failure lessons."
+        ],
+        "acceptanceCriteria": [
+          "Case study states only real measured test/eval results and avoids fabricated percentages.",
+          "Rollback plan lets operators revert prompts, models, or routing within minutes.",
+          "Maintenance owner, alert channel, and cost ceiling are explicitly assigned."
+        ]
+      },
+      "masteryChecklist": [
+        "I scope high-value, narrow automation problems instead of vague 'AI everything' pitches.",
+        "I define service objectives, cost budgets, data retention, and rollback procedures.",
+        "I measure real baseline vs post-automation outcomes honestly.",
+        "I can defend my architectural trade-offs and failure modes in engineering interviews."
+      ],
+      "resourceLinks": [
+        {
+          "title": "LangGraph Overview",
+          "url": "https://docs.langchain.com/oss/python/langgraph/overview",
+          "source": "LangChain Docs",
+          "reviewedAt": "2026-11-17"
+        },
+        {
+          "title": "FastAPI Tutorial",
+          "url": "https://fastapi.tiangolo.com/tutorial/",
+          "source": "FastAPI Docs",
+          "reviewedAt": "2026-11-17"
+        }
+      ]
+    }
+  ]
+}
