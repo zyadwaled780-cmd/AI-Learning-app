@@ -6,7 +6,7 @@
     "background_color": "#0F172A",
     "theme_color": "#0D9488",
     "description": "Practical engineering curriculum for building reliable AI and automation systems.",
-    "orientation": "portrait-primary",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {
